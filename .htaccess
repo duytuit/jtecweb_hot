@@ -1,0 +1,46 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+# Set cache for HTML and CSS files to 7 days
+<FilesMatch "\.(html|htm|css)$">
+    Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+
+# Set cache for JavaScript files to 7 days
+<FilesMatch "\.(js)$">
+    Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+
+# Set cache for images to 1 month
+<FilesMatch "\.(jpg|jpeg|png|gif|ico)$">
+    Header set Cache-Control "max-age=2592000, public"
+</FilesMatch>
+
+# Set cache for fonts to 1 year
+<FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+ STRONG HTACCESS PROTECTION
+<Files ~ "^.*\.([Ee][Nn][Vv])">
+ order allow,deny
+ deny from all
+ satisfy all
+</Files>

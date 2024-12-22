@@ -58,9 +58,10 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
 
-        <div class="page-wrapper" id="root">
+        <div class="page-wrapper">
 
             @yield('admin-content')
+
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
@@ -83,8 +84,5 @@
     @include('backend.layouts.partials.scripts')
     @yield('scripts')
     <div id="fade_overlay"><img id="fade_loading" src="{{ asset('public/images/loadding.gif') }}"/></div>
-    <script src="/js/lang"></script>
-    <script src="{{ mix('/js/plugin.js') }}"></script>
-    <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 </html>

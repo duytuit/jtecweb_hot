@@ -401,7 +401,7 @@ class RequiredController extends Controller
         if($check_duplicate == $_check_duplicate){
             return $this->success([
                 'status'=>false,
-                'message'=> 'Yêu cầu đã được chấp nhận. Hãy yêu cầu lại sau 1 phút',
+                'message'=> 'Yêu cầu đã được chấp nhận. Hãy yêu cầu lại sau 30 giây',
             ]);
         }
         RedisHelper::setAndExpire('check_duplicate_order',$_check_duplicate,30);
@@ -436,10 +436,15 @@ class RequiredController extends Controller
                 'message'=> 'Trong KHO đã hết.',
             ]);
         }
+        $quantity_detail  = $request->usage_status == 1 ? round($request->quantity * $accessory->material_norms,2)  :  $request->quantity;
+        // if($quantity_detail > floatval(preg_replace('/[^\d.]/', '', $request->ton_kho)) ){
+        //     return $this->success([
+        //         'status'=>false,
+        //         'message'=> "$quantity_detail Số lượng trong KHO chỉ còn $request->ton_kho. Hãy yêu cầu ít hơn hoặc =",
+        //     ]);
+        // }
         $sql = "SELECT 場所c,棚番 FROM TAD_Z60M WHERE 品目C = '$accessory->code'";
         $getList = DB::connection('oracle')->select($sql);
-
-
         $content_form=[
             'code' => @$accessory->code??'',
             'quantity' => @$request->quantity??'',
@@ -450,6 +455,7 @@ class RequiredController extends Controller
             'pc_name' => @$pc_name??'',
             'machine' => @ArrayHelper::list_machine[$pc_name]??''
         ];
+
         foreach ($getList as $key => $value) {
             //vị trí bộ phận order
             if(str_contains($value->場所c,'1510')){
@@ -473,14 +479,14 @@ class RequiredController extends Controller
                 'order' => $request->order??0,
                 'from_type'=>ArrayHelper::from_type_rquired_accessory,
                 'quantity' =>$request->usage_status == 1 ? $request->quantity : $request->quantity / $accessory->material_norms, // 1:chẵn,0:lẻ
-                'remaining' =>$request->usage_status == 1 ? round($request->quantity * $content_form['size'],2)  :  $request->quantity,
+                'remaining' =>$quantity_detail,
                 'created_by' => $employee->id,
                 'receiving_department_ids' => json_encode($formTypeJobs['to_dept']),
                 'usage_status' => $request->usage_status,
                 'content_form'=>$__content_form,
                 'location'=>@$content_form['location'],
                 'pc_name'=>$pc_name,
-                'quantity_detail'=> $request->usage_status == 1 ? round($request->quantity * $content_form['size'],2) :  $request->quantity,
+                'quantity_detail'=> $quantity_detail,
             ]);
 
             //bộ phận yêu cầu
@@ -581,11 +587,11 @@ class RequiredController extends Controller
                 }
                 if($count_print < 10){
                     for ($i=0; $i < $count_print; $i++) {
-                        $html =  view('qrcode.print-accessory', ['required' => $required])->render();
+                        $html =  view('qrcode.print-accessory1', ['required' => $required])->render();
                         RedisHelper::queueSet('print_required', $html);
                     }
                 }else{
-                    $html =  view('qrcode.print-accessory', ['required' => $required])->render();
+                    $html =  view('qrcode.print-accessory1', ['required' => $required])->render();
                     RedisHelper::queueSet('print_required', $html);
                 }
                 return $this->success([
@@ -615,7 +621,8 @@ class RequiredController extends Controller
     }
     public function checkRequired(Request $request)
     {
-        $required = Required::where('code', @$request->code??$request->searchcode)->where('status',0)->where('required_department_id',$request->department_id)->whereDate('created_at',Carbon::now()->format('Y-m-d'))->orderBy('id','desc')->first();
+        $_code =   @$request->code??$request->searchcode;
+        $required = Required::whereRaw("BINARY code = '$_code'")->where('status',0)->where('required_department_id',$request->department_id)->whereDate('created_at',Carbon::now()->format('Y-m-d'))->orderBy('id','desc')->first();
         if(!$required){
             return $this->success([
                 'status'=>false,
@@ -651,7 +658,7 @@ class RequiredController extends Controller
     }
     public function printPdf($required)
     {
-        $html =  view('qrcode.print-accessory', ['required' => $required])->render();
+        $html =  view('qrcode.print-accessory1', ['required' => $required])->render();
         $post_fields['Html'] = $html;
         $post_fields['PrinterName'] = 'SATO CG412';
         $post_fields['Landscape'] ='false';
@@ -810,7 +817,6 @@ class RequiredController extends Controller
                     $required = Required::find($value);
                     if($required && $required->status > 0){
                         $content_form = json_decode($required->content_form);
-                        $content_form->confirm_by_full_name = $employee->first_name.' '.$employee->last_name;
                         $content_form->confirm_by =$employee->id;
                         $content_form->confirm_date = Carbon::now()->format('H:i:s d-m-Y');
                         $required->content_form = json_encode($content_form);

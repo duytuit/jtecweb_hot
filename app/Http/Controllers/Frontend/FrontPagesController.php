@@ -604,6 +604,7 @@ class FrontPagesController extends Controller
         $new_cycle_name = Carbon::parse(substr((int)$cycle_name, 1, 4) . '-' . substr((int)$cycle_name, 0, 1) . '-1')->subMonths(1)->format('Y-m-d');
         $data['arrayExamPd'] = ArrayHelper::arrayExamPd()[$request->type];
         $getEmployeeBeginOneMonth = Employee::whereDate('begin_date_company', '>=', $new_cycle_name)->Where('code', $request->code)->first();
+        return view('frontend.pages.examNew',$data);
         if (!$getEmployeeBeginOneMonth) {
             return redirect()->back()->with('warning', 'Mã code không hợp lệ. Bạn cần cập nhật lại ngày bắt đầu làm việc.');
         } else {
@@ -1043,14 +1044,6 @@ class FrontPagesController extends Controller
                 'warehouse.delete',
             ],
 
-            'warehouse_v2' => [
-                'warehouse_v2.view',
-                'warehouse_v2.ong',
-                'warehouse_v2.create',
-                'warehouse_v2.edit',
-                'warehouse_v2.delete',
-            ],
-
             'accessory' => [
                 'accessory.view',
                 'accessory.create',
@@ -1183,14 +1176,15 @@ class FrontPagesController extends Controller
     }
     public function test1()
     {
-        dd(config('system'));
-        // $edp = DB::connection('oracle_toa_set')->table('TDCJSIJI')->where('HINCD', 'like','%6219818422-01%')->where('SENBAN','201')->first();
-        // dd($edp);
-        $required = Required::withTrashed()->find(22445);
-        //$edp->employee;
+        dd( explode("/",'12/12/2024'));
+        dd(floatval(preg_replace('/[^\d.]/', '', "0270")));
+        $required = Required::find(25);
+        dd($required);
         $edps[]=$required;
         $html =  view('qrcode.edp', ['edps' => $edps])->render();
         dd($html);
+        $edp = DB::connection('oracle_toa_set')->table('TDCJSIJI')->where('HINCD', 'like','%6219818422-01%')->where('SENBAN','201')->first();
+        dd($edp);
         $accessory = DB::table('accessories')->paginate(50);
         return response($accessory);
         $sdfd = "nguyễn duy tú";
@@ -2094,13 +2088,13 @@ class FrontPagesController extends Controller
                             $lastname = " ";
                         }
                         // Tạo nhân viên
-                        // $begin_date_company =@$value[5]? explode("/", $value[5]):;
+                        $begin_date_company = @$value[3] ? explode("/", $value[3]) : null;
                         // $birthday = explode("/", $value[3]);
                         $emp = Employee::create([
                             'code' =>trim($value[0]),
                             'first_name' => $firstname,
                             'last_name' => $lastname,
-                            // 'begin_date_company' => $begin_date_company[2] . '-' . $begin_date_company[1] . '-' . $begin_date_company[0],
+                            'begin_date_company' => $begin_date_company[2] . '-' . $begin_date_company[1] . '-' . $begin_date_company[0],
                             'status' => 1,
                             'created_by' => 1,
                             // 'birthday' => $birthday[2] . '-' . $birthday[1] . '-' . $birthday[0],
@@ -2184,6 +2178,7 @@ class FrontPagesController extends Controller
             if($key > 0){
                 $accessory_dept=[];
                 try {
+                   // dd($value);
                     $__code= trim($value[1]);
                     $accessory_dept[]=[
                         'location_c' => '1523',// mã công đoạn
@@ -2235,12 +2230,11 @@ class FrontPagesController extends Controller
                         'location_k'=> '7',
                         'location_c'=> '0111',
                         'location'=> '',
-                        'material_norms'=> 0,
+                        'material_norms'=> ($value[3] == "LẺ" ||  $value[3] == "ĐẶC BIỆT") ? 1 : (int)$value[3],
                         'accessory_dept'=> json_encode($accessory_dept),
                         'status'=>1,
-                        'note_type'=> trim($value[2]),
-                        'type'=>2,
-                        'unit'=>trim($value[3]),
+                        'type'=>0,
+                        'unit'=>'m',
                     ]);
                     echo 'Thành công!';
 

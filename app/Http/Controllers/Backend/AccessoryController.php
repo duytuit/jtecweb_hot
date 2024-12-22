@@ -190,9 +190,6 @@ class AccessoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'code' => 'required|unique:accessories,code',
-        ]);
         try {
             $accessory_dept[]=[
                 'location_c' => '1523',// mã công đoạn

@@ -105,7 +105,7 @@ class Required extends Model
         $post_fields['Landscape'] ='false';
         $post_fields['Width'] = '827';
         $post_fields['Height'] =  '1169';
-        $curl_handle = curl_init('http://192.168.207.6:8092/printpdffromhtml/html-pdf');
+        $curl_handle = curl_init('http://192.168.207.6:8092/printpdffromhtml/html-pdf-v2');
         curl_setopt($curl_handle, CURLOPT_HEADER, 0);
         curl_setopt($curl_handle, CURLOPT_VERBOSE, 0);
         curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);

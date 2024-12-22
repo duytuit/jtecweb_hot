@@ -410,7 +410,6 @@ class WareHouseController extends Controller
         $confirm_form['quantity']= (float)$request->quantity;
         $confirm_form['date']= Carbon::now();
         $confirm_form['user_id']= $employee->id;
-        $confirm_form['full_name']= $employee->first_name.' '. $employee->last_name;
         $confirm_form['note']= $request->note;
         $total_confirm_form[]=$confirm_form;
         $requireds->confirm_form = json_encode($total_confirm_form);
@@ -424,7 +423,7 @@ class WareHouseController extends Controller
         // if($requireds->required_department_id == 7){ // nếu là bộ phận dập thì set lệnh in phiếu
         //     RedisHelper::queueSet('print_required', $requireds);
         // }
-        // $html =  view('qrcode.print-accessory', ['required' => $requireds])->render();
+        // $html =  view('qrcode.print-accessory1', ['required' => $requireds])->render();
         // RedisHelper::queueSet('print_required', $html);
 
         return $this->success([

@@ -5,7 +5,7 @@
         width: 177px;
         border: 1px solid black;
         margin-bottom: 60px;
-        font-size: 8px;
+        font-size: 9px;
     }
     .product-code{
         font-weight: bold;
@@ -30,6 +30,7 @@
         border-top: none;
         border-left: none;
         border-right: none;
+        font-weight: bold;
     }
     .product-qr{
         border-top: none;
@@ -48,7 +49,7 @@
         padding: 0;
     }
     .info-text{
-        font-size: 14px
+        font-size: 13px
     }
     </style>
     <div class="product">

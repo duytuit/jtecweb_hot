@@ -3,14 +3,14 @@
         <div class="col-5 align-self-center">
             <h4 class="page-title">
                 @if (Route::is('admin.warehouses.index'))
-                   Yêu cầu trong ngày
+                {{ $lists->count() }} Yêu cầu trong ngày
                 @elseif(Route::is('admin.warehouses.create'))
                     Create New warehouses
                 @elseif(Route::is('admin.warehouses.edit'))
-                    Edit warehouses <span class="badge badge-info">{{ @$warehouses->title }}</span>
+                    Edit warehouses <span class="badge badge-info">{{ $warehouses->title }}</span>
                 @elseif(Route::is('admin.warehouses.show'))
-                    View warehouses <span class="badge badge-info">{{ @$warehouses->title }}</span>
-                    <a  class="btn btn-outline-success btn-sm" href="{{ route('admin.warehouses.edit', @$warehouses->id) }}"> <i class="fa fa-edit"></i></a>
+                    View warehouses <span class="badge badge-info">{{ $warehouses->title }}</span>
+                    <a  class="btn btn-outline-success btn-sm" href="{{ route('admin.warehouses.edit', $warehouses->id) }}"> <i class="fa fa-edit"></i></a>
                 @endif
             </h4>
         </div>

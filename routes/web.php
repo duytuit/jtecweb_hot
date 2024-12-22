@@ -5,9 +5,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontPagesController;
 use App\Http\Controllers\Frontend\PrintMakuController;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 /*
@@ -20,24 +18,6 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/js/lang', function () {
-    if (App::environment('local'))
-        Cache::forget('lang.js');
-    $strings = Cache::rememberForever('lang.js', function () {
-        $lang = config('app.locale');
-        $files = glob(resource_path('lang/' . $lang . '/*.php'));
-        $strings = [];
-        foreach ($files as $file) {
-            $name = basename($file, '.php');
-            $strings[$name] = require $file;
-        }
-        return $strings;
-    });
-    header('Content-Type: text/javascript');
-    echo('window.i18n = ' . json_encode($strings) . ';');
-    exit();
-})->name('assets.lang');
 
 Auth::routes();
 Route::get('qrcode', [App\Http\Controllers\QrcodeController::class, 'index']);

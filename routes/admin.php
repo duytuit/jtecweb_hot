@@ -408,25 +408,6 @@ Route::namespace('App\Http\Controllers\Backend')->group(function () {
         Route::post('checkRequired', 'WareHouseController@checkRequired')->name('checkRequired');
     });
 
-    Route::prefix('vue/warehouses')->name('warehouse_v2.')->group(function () {
-        Route::get('', 'Vue\WareHouseController@index')->name('index');
-        Route::get('index_ong', 'Vue\WareHouseController@index_ong')->name('index_ong');
-        Route::get('report', 'Vue\WareHouseController@report')->name('report');
-        Route::get('create', 'Vue\WareHouseController@create')->name('create');
-        Route::post('action', 'Vue\WareHouseController@action')->name('action');
-        Route::get('edit/{id}', 'Vue\WareHouseController@edit')->name('edit');
-        Route::get('exportExcel', 'Vue\WareHouseController@exportExcel')->name('exportExcel');
-        Route::get('exportExcelReport', 'Vue\WareHouseController@exportExcelReport')->name('exportExcelReport');
-        Route::put('trashed/revert/{id}', 'Vue\WareHouseController@revertFromTrash')->name('trashed.revert');
-        Route::get('trashed/destroy/{id}', 'Vue\WareHouseController@destroyTrash')->name('trashed.destroy');
-        Route::post('complete', 'Vue\WareHouseController@complete')->name('complete');
-        Route::post('checkLocaltion', 'Vue\WareHouseController@checkLocaltion')->name('checkLocaltion');
-        Route::get('createPrintPdf', 'Vue\WareHouseController@createPrintPdf')->name('createPrintPdf');
-        Route::post('checkRequired', 'Vue\WareHouseController@checkRequired')->name('checkRequired');
-        // api ware house
-        Route::get('index_data', 'Vue\WareHouseController@index_data')->name('index_data');
-    });
-
     /**
      * Accessory Management Routes
      */

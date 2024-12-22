@@ -224,6 +224,13 @@
                  $('#formPost').submit()
             }
         });
+        $(document).ready(function(){
+            $('#findCode').keypress(function (e) {
+                if (e.which === 13) {
+                    $('#formPost').submit()
+                }
+            })
+        })
         $('.btn_togle').click( function() {
             $('#findCode').focus();
             $('.menu_sidebar').toggleClass('show');

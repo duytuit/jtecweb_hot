@@ -568,72 +568,39 @@
                 @endif
 
                 @if ($user->can('warehouse.view') || $user->can('warehouse.create'))
-                    <li class="sidebar-item ">
-                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
-                            aria-expanded="false">
-                            <i class="mdi mdi-view-list"></i>
-                            <span class="hide-menu">Xuất linh kiện</span>
-                        </a>
-                        <ul aria-expanded="false" class="collapse first-level {{Route::is('admin.warehouses.index_ong') || Route::is('admin.warehouses.index') || Route::is('admin.warehouses.create') || Route::is('admin.warehouses.edit') || Route::is('admin.warehouses.report') ? 'in' : null }}">
-                            @if ($user->can('warehouse.view'))
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.warehouses.index') }}"
-                                        class="sidebar-link {{ Route::is('admin.warehouses.index') || Route::is('admin.warehouses.edit') ? 'active' : null }}">
-                                        <i class="mdi mdi-view-list"></i>
-                                        <span class="hide-menu"> Xuất dây Điện, Tanshi </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.warehouses.report') }}"
-                                        class="sidebar-link {{ Route::is('admin.warehouses.report') || Route::is('admin.warehouses.edit') ? 'active' : null }}">
-                                        <i class="mdi mdi-view-list"></i>
-                                        <span class="hide-menu"> Báo cáo </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.warehouses.index_ong') }}"
-                                        class="sidebar-link {{ Route::is('admin.warehouses.index_ong') || Route::is('admin.warehouses.edit') ? 'active' : null }}">
-                                        <i class="mdi mdi-view-list"></i>
-                                        <span class="hide-menu"> Xuất ống,băng dính,keo,thiếc</span>
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
+                <li class="sidebar-item ">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                        aria-expanded="false">
+                        <i class="mdi mdi-view-list"></i>
+                        <span class="hide-menu">Xuất linh kiện</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level {{Route::is('admin.warehouses.index_ong') || Route::is('admin.warehouses.index') || Route::is('admin.warehouses.create') || Route::is('admin.warehouses.edit') || Route::is('admin.warehouses.report') ? 'in' : null }}">
+                        @if ($user->can('warehouse.view'))
+                            <li class="sidebar-item">
+                                <a href="{{ route('admin.warehouses.index') }}"
+                                    class="sidebar-link {{ Route::is('admin.warehouses.index') || Route::is('admin.warehouses.edit') ? 'active' : null }}">
+                                    <i class="mdi mdi-view-list"></i>
+                                    <span class="hide-menu"> Xuất dây Điện, Tanshi </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('admin.warehouses.report') }}"
+                                    class="sidebar-link {{ Route::is('admin.warehouses.report') || Route::is('admin.warehouses.edit') ? 'active' : null }}">
+                                    <i class="mdi mdi-view-list"></i>
+                                    <span class="hide-menu"> Báo cáo </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('admin.warehouses.index_ong') }}"
+                                    class="sidebar-link {{ Route::is('admin.warehouses.index_ong') || Route::is('admin.warehouses.edit') ? 'active' : null }}">
+                                    <i class="mdi mdi-view-list"></i>
+                                    <span class="hide-menu"> Xuất ống,băng dính,keo,thiếc</span>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
                 @endif
-
-                    <li class="sidebar-item ">
-                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
-                            aria-expanded="false">
-                            <i class="mdi mdi-view-list"></i>
-                            <span class="hide-menu">Xuất linh kiện New</span>
-                        </a>
-                        <ul aria-expanded="false" class="collapse first-level {{Route::is('admin.warehouse_v2.index_ong') || Route::is('admin.warehouse_v2.index') || Route::is('admin.warehouse_v2.create') || Route::is('admin.warehouse_v2.edit') || Route::is('admin.warehouse_v2.report') ? 'in' : null }}">
-
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.warehouse_v2.index') }}"
-                                        class="sidebar-link {{ Route::is('admin.warehouse_v2.index') || Route::is('admin.warehouse_v2.edit') ? 'active' : null }}">
-                                        <i class="mdi mdi-view-list"></i>
-                                        <span class="hide-menu"> Xuất dây Điện, Tanshi </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.warehouse_v2.report') }}"
-                                        class="sidebar-link {{ Route::is('admin.warehouse_v2.report') || Route::is('admin.warehouse_v2.edit') ? 'active' : null }}">
-                                        <i class="mdi mdi-view-list"></i>
-                                        <span class="hide-menu"> Báo cáo </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.warehouse_v2.index_ong') }}"
-                                        class="sidebar-link {{ Route::is('admin.warehouse_v2.index_ong') || Route::is('admin.warehouse_v2.edit') ? 'active' : null }}">
-                                        <i class="mdi mdi-view-list"></i>
-                                        <span class="hide-menu"> Xuất ống,băng dính,keo,thiếc</span>
-                                    </a>
-                                </li>
-                        </ul>
-                    </li>
-
                 @if ($user->can('checkdevice.view') || $user->can('checkdevice.create'))
                 <li class="sidebar-item ">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"

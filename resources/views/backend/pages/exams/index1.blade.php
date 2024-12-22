@@ -136,14 +136,7 @@
                                     @endphp
                                     <td>{{ $item->code }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>
-                                        @php
-                                        if($item->sub_dept){
-                                           $dept = Department::find($item->sub_dept);
-                                        }
-                                    @endphp
-                                    {{  @$dept ? $dept->name : '----'}}
-                                    </td>
+                                    <td>{{ $item->sub_dept == 1 ? 'Cắm' : '' }}</td>
                                 @else
                                     <td colspan="3"></td>
                                 @endif
